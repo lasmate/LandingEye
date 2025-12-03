@@ -2,6 +2,7 @@ import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 
 // Scene
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffffff);
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -39,7 +40,6 @@ const outerStarShape = new THREE.Shape();
 const outerRadius = 1;
 const innerRadius = 0.15;
 const points = 4;
-
 for (let i = 0; i < points * 2; i++) {
     const radius = i % 2 === 0 ? outerRadius : innerRadius;
     const angle = (i / (points * 2)) * Math.PI * 2;
@@ -53,7 +53,6 @@ outerStarShape.closePath();
 const innerStarShape = new THREE.Shape();
 const innerOuterRadius = 0.7;
 const innerInnerRadius = 0.13;
-
 for (let i = 0; i < points * 2; i++) {
     const radius = i % 2 === 0 ? innerOuterRadius : innerInnerRadius;
     const angle = (i / (points * 2)) * Math.PI * 2;
@@ -66,18 +65,68 @@ innerStarShape.closePath();
 
 
 const outerStarGeometry = new THREE.ShapeGeometry(outerStarShape);
-const outerStarMaterial = new THREE.MeshBasicMaterial({ color: 0x171411, side: THREE.DoubleSide }); // 
+const outerStarMaterial = new THREE.MeshBasicMaterial({ color: 0x171411, side: THREE.DoubleSide });
 const outerStar = new THREE.Mesh(outerStarGeometry, outerStarMaterial);
 outerStar.position.z = 0.03; // On top of inner circle
 outerStar.scale.set(0, 0, 1); // Start invisible
 
 const innerStarGeometry = new THREE.ShapeGeometry(innerStarShape);
-const innerStarMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide }); //
+const innerStarMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
 const innerStar = new THREE.Mesh(innerStarGeometry, innerStarMaterial);
 innerStar.position.z = 0.04; // On top of outer star
 innerStar.scale.set(0, 0, 1); // Start invisible
 eyeGroup.add(outerStar);
 eyeGroup.add(innerStar);
+
+// Vignette Eyelid
+const vignetteShape = new THREE.Shape();
+const w = 30; // Large width to cover screen
+const h = 20; // Large height
+vignetteShape.moveTo(-w/2, -h/2);
+vignetteShape.lineTo(w/2, -h/2);
+vignetteShape.lineTo(w/2, h/2);
+vignetteShape.lineTo(-w/2, h/2);
+vignetteShape.closePath();
+
+const hole = new THREE.Path();
+hole.absellipse(0, 0, 4.5, 2, 0, Math.PI * 2, false, 0);//desc: x, y, xRadius, yRadius, startAngle, endAngle, clockwise, rotation
+vignetteShape.holes.push(hole);
+
+const vignetteGeometry = new THREE.ShapeGeometry(vignetteShape);
+
+const vignetteMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+        color1: { value: new THREE.Color(0xa49080) },
+        color2: { value: new THREE.Color(0xead3c6) }
+    },
+    vertexShader: `
+        varying vec2 vPos;
+        void main() {
+            vPos = position.xy;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    `,
+    fragmentShader: `
+        uniform vec3 color1;
+        uniform vec3 color2;
+        varying vec2 vPos;
+        void main() {
+            // Normalize position based on shape dimensions (w=30, h=20)
+            float nx = (vPos.x + 15.0) / 30.0;
+            float ny = (vPos.y + 10.0) / 20.0;
+            
+            // 45 degree gradient
+            float t = (nx + ny) * 0.5;
+            
+            gl_FragColor = vec4(mix(color1, color2, t), 1.0);
+        }
+    `,
+    side: THREE.DoubleSide
+});
+
+const vignette = new THREE.Mesh(vignetteGeometry, vignetteMaterial);
+vignette.position.z = 1;
+scene.add(vignette);
 
 
 // Calculate visible height at the circle's depth (z=0)
