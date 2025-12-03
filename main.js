@@ -12,7 +12,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Circle
+// Circles
 const geometry = new THREE.CircleGeometry(1, 64);
 const outerMat = new THREE.MeshBasicMaterial({ color: 0x4c351d, side: THREE.DoubleSide });
 const midMat = new THREE.MeshBasicMaterial({ color: 0xefc760, side: THREE.DoubleSide });
@@ -22,16 +22,20 @@ const outerCircle = new THREE.Mesh(geometry, outerMat);
 const midCircle = new THREE.Mesh(geometry, midMat);
 const innerCircle = new THREE.Mesh(geometry, innerMat);
 
+// Group for all objects
+const eyeGroup = new THREE.Group();
+scene.add(eyeGroup);
+
 // Offset Z to prevent z-fighting
 midCircle.position.z = 0.01;
 innerCircle.position.z = 0.02;
 
-scene.add(outerCircle);
-scene.add(midCircle);
-scene.add(innerCircle);
+eyeGroup.add(outerCircle);
+eyeGroup.add(midCircle);
+eyeGroup.add(innerCircle);
 
-// Star
-const starShape = new THREE.Shape();
+// Stars
+const outerStarShape = new THREE.Shape();
 const outerRadius = 1;
 const innerRadius = 0.15;
 const points = 4;
@@ -41,17 +45,40 @@ for (let i = 0; i < points * 2; i++) {
     const angle = (i / (points * 2)) * Math.PI * 2;
     const x = Math.cos(angle) * radius;
     const y = Math.sin(angle) * radius;
-    if (i === 0) starShape.moveTo(x, y);
-    else starShape.lineTo(x, y);
+    if (i === 0) outerStarShape.moveTo(x, y);
+    else outerStarShape.lineTo(x, y);
 }
-starShape.closePath();
+outerStarShape.closePath();
 
-const starGeometry = new THREE.ShapeGeometry(starShape);
-const starMaterial = new THREE.MeshBasicMaterial({ color: 0x171411, side: THREE.DoubleSide }); // 
-const star = new THREE.Mesh(starGeometry, starMaterial);
-star.position.z = 0.03; // On top of inner circle
-star.scale.set(0, 0, 1); // Start invisible
-scene.add(star);
+const innerStarShape = new THREE.Shape();
+const innerOuterRadius = 0.7;
+const innerInnerRadius = 0.13;
+
+for (let i = 0; i < points * 2; i++) {
+    const radius = i % 2 === 0 ? innerOuterRadius : innerInnerRadius;
+    const angle = (i / (points * 2)) * Math.PI * 2;
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+    if (i === 0) innerStarShape.moveTo(x, y);
+    else innerStarShape.lineTo(x, y);
+}
+innerStarShape.closePath();
+
+
+const outerStarGeometry = new THREE.ShapeGeometry(outerStarShape);
+const outerStarMaterial = new THREE.MeshBasicMaterial({ color: 0x171411, side: THREE.DoubleSide }); // 
+const outerStar = new THREE.Mesh(outerStarGeometry, outerStarMaterial);
+outerStar.position.z = 0.03; // On top of inner circle
+outerStar.scale.set(0, 0, 1); // Start invisible
+
+const innerStarGeometry = new THREE.ShapeGeometry(innerStarShape);
+const innerStarMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide }); //
+const innerStar = new THREE.Mesh(innerStarGeometry, innerStarMaterial);
+innerStar.position.z = 0.04; // On top of outer star
+innerStar.scale.set(0, 0, 1); // Start invisible
+eyeGroup.add(outerStar);
+eyeGroup.add(innerStar);
+
 
 // Calculate visible height at the circle's depth (z=0)
 const distance = camera.position.z;
@@ -67,9 +94,25 @@ const endScaleMid = (visibleHeight * 0.45) / 2;
 const endScaleInner = (visibleHeight * 0.20) / 2;
 const endScaleStar = (visibleHeight * 0.30) / 2; 
 
+
 outerCircle.scale.set(startScale, startScale, 1);
 midCircle.scale.set(startScale, startScale, 1);
 innerCircle.scale.set(startScale, startScale, 1);
+
+// Mouse Interaction
+const mouse = { x: 0, y: 0 };
+window.addEventListener('mousemove', (event) => {
+    // Normalize mouse position from -1 to 1
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+});
+
+// Click Interaction
+let clickStartTime = null;
+const clickDuration = 200; // 200ms pulse
+window.addEventListener('click', () => {
+    clickStartTime = performance.now();
+});
 
 // Scroll Interaction
 let starScrollRotation = 0;
@@ -113,13 +156,84 @@ function animate(time) {
         const starEase = 1 - Math.pow(1 - starProgress, 3);
 
         const currentScaleStar = 0 + (endScaleStar - 0) * starEase;
-        star.scale.set(currentScaleStar, currentScaleStar, 1);
+        outerStar.scale.set(currentScaleStar, currentScaleStar, 1);
+        innerStar.scale.set(currentScaleStar, currentScaleStar, 1);
         
-        // Rotate 60 degrees (PI/3) + scroll rotation
-        star.rotation.z = ((3*Math.PI / 4) * starEase) + starScrollRotation;
+        // Rotate 60 degrees (3*Math.PI/4) + scroll rotation
+        const currentRotation = ((3*Math.PI / 4) * starEase) + starScrollRotation;
+        outerStar.rotation.z = currentRotation;
+        innerStar.rotation.z = currentRotation;
+
+        // Click Effect Calculation
+        let clickEffect = 0;
+        if (clickStartTime !== null) {
+            const clickElapsed = time - clickStartTime;
+            if (clickElapsed < clickDuration) {
+                const t = clickElapsed / clickDuration;
+                // Spike function: 1 at start, 0 at end. Cubic ease out.
+                clickEffect = 1 - Math.pow(t, 3);
+            } else {
+                clickStartTime = null;
+            }
+        }
+
+        // Update Outer Star (Click Effect)
+        const baseOuterRadius = 1;
+        const currentOuterRadius = baseOuterRadius * (1 + 0.8 * clickEffect); // Increase by 80%
+        const outerInnerRadius = 0.15;
+
+        const newOuterStarShape = new THREE.Shape();
+        for (let i = 0; i < 8; i++) {
+            const radius = i % 2 === 0 ? currentOuterRadius : outerInnerRadius;
+            const angle = (i / 8) * Math.PI * 2;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            if (i === 0) newOuterStarShape.moveTo(x, y);
+            else newOuterStarShape.lineTo(x, y);
+        }
+        newOuterStarShape.closePath();
+        outerStar.geometry.dispose();
+        outerStar.geometry = new THREE.ShapeGeometry(newOuterStarShape);
+
+        // Pulse Inner Star Radius
+        // Oscillate between 0.06 and 0.13
+        // Midpoint 0.095, Amplitude 0.035
+        const pulseSpeed = 0.005;
+        const currentInnerRadius = 0.095 + 0.035 * Math.sin(time * pulseSpeed);
+        
+        const newInnerStarShape = new THREE.Shape();
+        const baseInnerOuterRadius = 0.6; 
+        const currentInnerOuterRadius = baseInnerOuterRadius * (1 - 0.8 * clickEffect); // Decrease by 80%
+        
+        for (let i = 0; i < 8; i++) { // 4 points * 2
+            const radius = i % 2 === 0 ? currentInnerOuterRadius : currentInnerRadius;
+            const angle = (i / 8) * Math.PI * 2;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            if (i === 0) newInnerStarShape.moveTo(x, y);
+            else newInnerStarShape.lineTo(x, y);
+        }
+        newInnerStarShape.closePath();
+        
+        innerStar.geometry.dispose();
+        innerStar.geometry = new THREE.ShapeGeometry(newInnerStarShape);
+
     } else {
-        star.rotation.z = starScrollRotation;
+        outerStar.rotation.z = starScrollRotation;
+        innerStar.rotation.z = starScrollRotation;
     }
+
+    // Mouse follow rotation (tilt)
+    const maxTilt = 0.3; // Adjust for more/less tilt
+    eyeGroup.rotation.y += (mouse.x * maxTilt - eyeGroup.rotation.y) * 0.05;
+    eyeGroup.rotation.x += (-mouse.y * maxTilt - eyeGroup.rotation.x) * 0.05;
+
+    // Mouse follow position (shift)
+    const maxShift = 1.2; // Adjust for more/less shift
+    eyeGroup.position.x += (mouse.x * maxShift - eyeGroup.position.x) * 0.05;
+    eyeGroup.position.y += (mouse.y * maxShift - eyeGroup.position.y) * 0.05;
+
+
 
     renderer.render(scene, camera);
 }
