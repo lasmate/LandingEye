@@ -96,7 +96,7 @@ const vignetteGeometry = new THREE.ShapeGeometry(vignetteShape);
 
 const vignetteMaterial = new THREE.ShaderMaterial({
     uniforms: {
-        color1: { value: new THREE.Color(0xa49080) },
+        color1: { value: new THREE.Color(0xffdfc6) },
         color2: { value: new THREE.Color(0xead3c6) }
     },
     vertexShader: `
@@ -116,7 +116,7 @@ const vignetteMaterial = new THREE.ShaderMaterial({
             float ny = (vPos.y + 10.0) / 20.0;
             
             // 45 degree gradient
-            float t = (nx + ny) * 0.5;
+            float t = (nx + ny) * 0.625;
             
             gl_FragColor = vec4(mix(color1, color2, t), 1.0);
         }
