@@ -312,6 +312,27 @@ function darkenRgb(rgb, percent) {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
+// Prepare H1 animations
+document.querySelectorAll('.page-content h1').forEach(h1 => {
+    const text = h1.textContent;
+    h1.textContent = '';
+    text.split('').forEach((char) => {
+        const span = document.createElement('span');
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        span.className = 'char';
+        
+        // Random duration between 2s and 4s for the breathing effect
+        const duration = 2 + Math.random() * 2;
+        span.style.animationDuration = `${duration}s`;
+        
+        // Random negative delay to ensure they start at different points in the cycle
+        const delay = -Math.random() * duration;
+        span.style.animationDelay = `${delay}s`;
+        
+        h1.appendChild(span);
+    });
+});
+
 // Button Click Transition
 document.querySelectorAll('.corner-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {

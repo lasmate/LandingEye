@@ -94,9 +94,28 @@ canvas {
 }
 
 .page-content h1 {
-    font-family: sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 4rem;
     margin-bottom: 20px;
+    font-weight: 100; /* Start thin */
+}
+
+.page-content h1 .char {
+    display: inline-block;
+    opacity: 1;
+    animation: breathe infinite ease-in-out;
+}
+
+@keyframes breathe {
+    0% {
+        font-variation-settings: "wght" 100;
+    }
+    50% {
+        font-variation-settings: "wght" 900;
+    }
+    100% {
+        font-variation-settings: "wght" 100;
+    }
 }
 
 .page-content p {
