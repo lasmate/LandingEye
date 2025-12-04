@@ -18,19 +18,23 @@ const geometry = new THREE.CircleGeometry(1, 64);
 const outerMat = new THREE.MeshBasicMaterial({ color: 0x4c351d, side: THREE.DoubleSide });
 const midMat = new THREE.MeshBasicMaterial({ color: 0xefc760, side: THREE.DoubleSide });
 const innerMat = new THREE.MeshBasicMaterial({ color: 0xf9f9aa, side: THREE.DoubleSide });
+const outlineMat = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide });
 
 const outerCircle = new THREE.Mesh(geometry, outerMat);
 const midCircle = new THREE.Mesh(geometry, midMat);
 const innerCircle = new THREE.Mesh(geometry, innerMat);
+const outlineCircle = new THREE.Mesh(geometry, outlineMat);
 
 // Group for all objects
 const eyeGroup = new THREE.Group();
 scene.add(eyeGroup);
 
 // Offset Z to prevent z-fighting
+outlineCircle.position.z = -0.01; // Behind
 midCircle.position.z = 0.01;
 innerCircle.position.z = 0.02;
 
+eyeGroup.add(outlineCircle);
 eyeGroup.add(outerCircle);
 eyeGroup.add(midCircle);
 eyeGroup.add(innerCircle);
@@ -115,8 +119,8 @@ const vignetteMaterial = new THREE.ShaderMaterial({
             float nx = (vPos.x + 15.0) / 30.0;
             float ny = (vPos.y + 10.0) / 20.0;
             
-            // 45 degree gradient
-            float t = (nx + ny) * 0.625;
+            // Vertical gradient
+            float t = ny;
             
             gl_FragColor = vec4(mix(color1, color2, t), 1.0);
         }
@@ -170,6 +174,7 @@ window.addEventListener('wheel', (event) => {
     outerCircle.rotation.z += rotation;
     midCircle.rotation.z += rotation;
     innerCircle.rotation.z += rotation;
+    outlineCircle.rotation.z += rotation;
     starScrollRotation += rotation;
 });
 
@@ -193,10 +198,12 @@ function animate(time) {
     const currentScaleOuter = startScale + (endScaleOuter - startScale) * circleEase;
     const currentScaleMid = startScale + (endScaleMid - startScale) * circleEase;
     const currentScaleInner = startScale + (endScaleInner - startScale) * circleEase;
+    const currentScaleOutline = currentScaleOuter * 1.02; // 2% wider
 
     outerCircle.scale.set(currentScaleOuter, currentScaleOuter, 1);
     midCircle.scale.set(currentScaleMid, currentScaleMid, 1);
     innerCircle.scale.set(currentScaleInner, currentScaleInner, 1);
+    outlineCircle.scale.set(currentScaleOutline, currentScaleOutline, 1);
 
     // Star Animation (Phase 2 - starts after circleDuration)
     if (elapsed > circleDuration) {
@@ -292,6 +299,39 @@ window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Button Click Transition
+document.querySelectorAll('.corner-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+
+        const circle = document.createElement('div');
+        circle.classList.add('transition-circle');
+        
+        // Set color based on button
+        const computedStyle = window.getComputedStyle(btn);
+        circle.style.backgroundColor = computedStyle.backgroundColor;
+
+        // Calculate radius to cover screen (distance to furthest corner)
+        const w = Math.max(x, window.innerWidth - x);
+        const h = Math.max(y, window.innerHeight - y);
+        const radius = Math.sqrt(w * w + h * h);
+        
+        circle.style.width = `${radius * 2}px`;
+        circle.style.height = `${radius * 2}px`;
+        circle.style.left = `${x - radius}px`;
+        circle.style.top = `${y - radius}px`;
+        
+        document.body.appendChild(circle);
+        
+        // Force reflow
+        circle.getBoundingClientRect();
+        
+        circle.style.transform = 'scale(1)';
+    });
 });
 
 animate();
