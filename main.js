@@ -180,8 +180,8 @@ window.addEventListener('wheel', (event) => {
 
 // Animation Loop
 let startTime = null;
-const circleDuration = 1500; // 1.5 seconds
-const starDuration = 500; // 0.5 second for star animation
+const circleDuration = 500; // 1.5 seconds
+const starDuration = 250; // 0.5 second for star animation
 
 function animate(time) {
     requestAnimationFrame(animate);
@@ -301,6 +301,17 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+// Helper to darken RGB color
+function darkenRgb(rgb, percent) {
+    const values = rgb.match(/\d+/g);
+    if (!values || values.length < 3) return rgb;
+    const factor = 1 - percent / 100;
+    const r = Math.floor(values[0] * factor);
+    const g = Math.floor(values[1] * factor);
+    const b = Math.floor(values[2] * factor);
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
 // Button Click Transition
 document.querySelectorAll('.corner-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -308,29 +319,91 @@ document.querySelectorAll('.corner-btn').forEach(btn => {
         const x = rect.left + rect.width / 2;
         const y = rect.top + rect.height / 2;
 
-        const circle = document.createElement('div');
-        circle.classList.add('transition-circle');
-        
-        // Set color based on button
-        const computedStyle = window.getComputedStyle(btn);
-        circle.style.backgroundColor = computedStyle.backgroundColor;
-
         // Calculate radius to cover screen (distance to furthest corner)
         const w = Math.max(x, window.innerWidth - x);
         const h = Math.max(y, window.innerHeight - y);
         const radius = Math.sqrt(w * w + h * h);
-        
+
+        // Colors
+        const computedStyle = window.getComputedStyle(btn);
+        const mainColor = computedStyle.backgroundColor;
+        const darkColor = darkenRgb(mainColor, 20);
+
+        // Create Dark Circle (Background)
+        const darkCircle = document.createElement('div');
+        darkCircle.classList.add('transition-circle');
+        darkCircle.style.backgroundColor = darkColor;
+        darkCircle.style.zIndex = '199'; // Behind main circle
+        darkCircle.style.width = `${radius * 2}px`;
+        darkCircle.style.height = `${radius * 2}px`;
+        darkCircle.style.left = `${x - radius}px`;
+        darkCircle.style.top = `${y - radius}px`;
+        document.body.appendChild(darkCircle);
+
+        // Create Main Circle (Foreground)
+        const circle = document.createElement('div');
+        circle.classList.add('transition-circle');
+        circle.style.backgroundColor = mainColor;
         circle.style.width = `${radius * 2}px`;
         circle.style.height = `${radius * 2}px`;
         circle.style.left = `${x - radius}px`;
         circle.style.top = `${y - radius}px`;
-        
         document.body.appendChild(circle);
         
         // Force reflow
+        darkCircle.getBoundingClientRect();
         circle.getBoundingClientRect();
         
-        circle.style.transform = 'scale(1)';
+        // Animate with delay for layering effect
+        darkCircle.style.transform = 'scale(1)';
+        setTimeout(() => {
+            circle.style.transform = 'scale(1)';
+        }, 100);
+
+        // Show Content
+        const targetId = btn.getAttribute('data-target');
+        const content = document.getElementById(targetId);
+        if (content) {
+            content.classList.add('active');
+            // Fade in after circle covers screen (approx 500ms + delay)
+            setTimeout(() => {
+                content.style.opacity = '1';
+            }, 600);
+        }
+
+        // Create Close Button
+        const closeBtn = document.createElement('button');
+        closeBtn.className = btn.className; // Copy positioning classes
+        closeBtn.classList.add('close-btn');
+        closeBtn.innerHTML = '<span class="material-symbols-outlined">close</span>';
+        
+        document.body.appendChild(closeBtn);
+        
+        closeBtn.addEventListener('click', () => {
+            // Hide content
+            if (content) {
+                content.style.opacity = '0';
+                setTimeout(() => {
+                    content.classList.remove('active');
+                }, 500);
+            }
+
+            circle.style.transform = 'scale(0)';
+            setTimeout(() => {
+                darkCircle.style.transform = 'scale(0)';
+            }, 100); // Delay dark circle closing
+
+            closeBtn.remove();
+            
+            // Remove circles after animation
+            darkCircle.addEventListener('transitionend', () => {
+                darkCircle.remove();
+            }, { once: true });
+            
+            circle.addEventListener('transitionend', () => {
+                circle.remove();
+            }, { once: true });
+        });
     });
 });
 

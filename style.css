@@ -54,15 +54,54 @@ canvas {
 .bottom-right {
     bottom: 2vh;
     right: 2vw;
-    background-color: #2196F3;
+    background-color: #21f360;
 }
 
 .transition-circle {
     position: absolute;
     border-radius: 50%;
-    background-color: #ffffff;
+    background-color: #4c351d;
     transform: scale(0);
     pointer-events: none;
     z-index: 200;
     transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.close-btn {
+    z-index: 300;
+    background-color: white !important;
+    color: #333;
+}
+
+.page-content {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 250; /* Above circle (200), below close button (300) */
+    padding: 100px;
+    box-sizing: border-box;
+    color: #333;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    overflow-y: auto;
+}
+
+.page-content.active {
+    display: block;
+}
+
+.page-content h1 {
+    font-family: sans-serif;
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.page-content p {
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    max-width: 800px;
 }

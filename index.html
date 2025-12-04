@@ -8,10 +8,32 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 <body>
-    <button class="corner-btn top-left"><span class="material-symbols-outlined">sentiment_calm</span></button>
-    <button class="corner-btn top-right"><span class="material-symbols-outlined">newspaper</span></button>
-    <button class="corner-btn bottom-left"><span class="material-symbols-outlined">business_center</span></button>
-    <button class="corner-btn bottom-right"><span class="material-symbols-outlined">alternate_email</span></button>
+    <button class="corner-btn top-left" data-target="about"><span class="material-symbols-outlined">sentiment_calm</span></button>
+    <button class="corner-btn top-right" data-target="news"><span class="material-symbols-outlined">newspaper</span></button>
+    <button class="corner-btn bottom-left" data-target="work"><span class="material-symbols-outlined">business_center</span></button>
+    <button class="corner-btn bottom-right" data-target="contact"><span class="material-symbols-outlined">alternate_email</span></button>
+    
+    <!-- Content Sections -->
+    <div id="about" class="page-content">
+        <h1>About</h1>
+        <p>Keep calm and carry on. This is the philosophy section.</p>
+    </div>
+
+    <div id="news" class="page-content">
+        <h1>Latest News</h1>
+        <p>Read all about it! Updates and announcements go here.</p>
+    </div>
+
+    <div id="work" class="page-content">
+        <h1>Our Work</h1>
+        <p>Check out our latest projects and case studies.</p>
+    </div>
+
+    <div id="contact" class="page-content">
+        <h1>Get in Touch</h1>
+        <p>Drop us a line at hello@example.com</p>
+    </div>
+
     <script type="module" src="main.js"></script>
 </body>
 </html>
