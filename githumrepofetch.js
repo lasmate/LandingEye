@@ -1,7 +1,7 @@
 // Constants for better maintainability
 const CACHE_DURATION = 3600000; // 1 hour in milliseconds
 const GITHUB_USERNAME = 'lasmate';
-const REPOS_PER_PAGE = 3;
+const REPOS_PER_PAGE = 5; // Increased to fill carousel
 
 // Cache keys
 const CACHE_KEYS = {
@@ -12,7 +12,7 @@ const CACHE_KEYS = {
 };
 
 // Current cache version - increment when making breaking changes
-const CACHE_VERSION = '1.0';
+const CACHE_VERSION = '1.1';
 
 // Initialize when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,7 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function fetchRepos() {
-  const repoList = document.getElementById('repo-list');
+  const repoList = document.getElementById('github-projects-carousel');
+  if (!repoList) return;
+
   try {
     // Check cache first
     const cache = localStorage.getItem(CACHE_KEYS.REPOS);
@@ -44,7 +46,7 @@ async function fetchRepos() {
     }
 
     // Show loading indicator
-  repoList.innerHTML = '<li><div style="background-color: var(--bg-0b344f); border-radius: 10px; padding: 10px; margin-bottom: 15px; width:80vw;">Loading repositories...</div></li>';
+    repoList.innerHTML = '<div class="carousel-item">Loading...</div>';
     
     // Check rate limit before making the main request
     const rateLimitResponse = await fetch('https://api.github.com/rate_limit');
@@ -75,16 +77,15 @@ async function fetchRepos() {
 
   } catch (error) {
     console.error('Error fetching repos:', error);
-  repoList.innerHTML = `<li><div style="background-color: var(--bg-0b344f); border-radius: 10px; padding: 10px; margin-bottom: 15px; width:80vw;">
-      <img   src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" style="border-radius:10px; width: 20px; height: 20px; vertical-align: middle; margin-right: 10px;">
-      <span>${error.message || 'Error fetching repos. Please try again later.'}</span>
-  <button onclick="clearGitHubCache()" style="margin-left: 15px; background: var(--bg-0d1117); border: 1px solid var(--border-30363d); color: var(--muted-c9d1d9); padding: 3px 8px; border-radius: 6px; cursor: pointer;">Retry</button>
-    </div></li>`;
+    repoList.innerHTML = `<div class="carousel-item" style="background-color: #ffcccc; color: #990000; font-size: 0.8rem; text-align: center;">
+      ${error.message || 'Error fetching repos.'}
+      <br><button onclick="clearGitHubCache()" style="margin-top:5px; cursor:pointer;">Retry</button>
+    </div>`;
   }
 }
 
 async function renderRepos(repos, languagesCache) {
-  const repoList = document.getElementById('repo-list');
+  const repoList = document.getElementById('github-projects-carousel');
   repoList.innerHTML = ''; // Clear existing content
   
   // Use DocumentFragment for better performance
@@ -121,58 +122,42 @@ async function renderRepos(repos, languagesCache) {
         .map(([name, bytes]) => name)
         .slice(0, 3);
 
-      const listItem = document.createElement('li');
-      listItem.innerHTML = `
-  <div style="background-color: var(--bg-353535); border-radius: 10px; padding: 10px; margin-bottom: 15px; width:60vw;" class="repo-card">
-          <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 10px;">
-          <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" style="font-weight: thin; font-size: large;">${repo.name} :</a><br> ${repo.description || 'No description available'}<br>
-          <div style="color: rgba(217,217,217,1); font-size: larger;">Main languages: ${languagesList.length ? languagesList.join(', ') : 'None detected'}</div><br>
-          Last updated: ${new Date(repo.updated_at).toLocaleString()}<br>
-          <div class="github-embed" style="margin-top: 10px;">
-            <iframe 
-              src="https://ghbtns.com/github-btn.html?user=${GITHUB_USERNAME}&repo=${repo.name}&type=star&count=true&size=large" 
-              frameborder="0" 
-              scrolling="0" 
-              width="170" 
-              height="30" 
-              title="${repo.name} GitHub Stars"
-              loading="lazy">
-            </iframe>
+      const card = document.createElement('div');
+      card.className = 'carousel-item';
+      // Make the whole card clickable
+      card.onclick = () => window.open(repo.html_url, '_blank');
+      
+      card.innerHTML = `
+        <div style="padding: 15px; width: 100%; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+          <div style="font-weight: bold; font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+             <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" style="width: 16px; height: 16px;">
+             <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${repo.name}</span>
+          </div>
+          <div style="font-size: 0.8rem; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.2;">
+            ${repo.description || 'No description available'}
+          </div>
+          <div style="font-size: 0.7rem; color: #555; display: flex; justify-content: space-between; align-items: center;">
+            <span>${languagesList.length ? languagesList[0] : 'Code'}</span>
+            <span>★ ${repo.stargazers_count}</span>
           </div>
         </div>
       `;
-  fragment.appendChild(listItem);
+      fragment.appendChild(card);
     } catch (error) {
-      console.error(`Error processing repo "${repo.name}" (URL: ${repo.html_url}): ${error.message}\nStack Trace:`, error.stack);
-      const errorItem = document.createElement('li');
-      errorItem.innerHTML = `
-    <div style="background-color: var(--bg-353535); border-radius: 10px; padding: 10px; margin-bottom: 15px; width:80vw;">
-          <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 10px;">
-          <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">${repo.name}</a>: ${error.message}
-        </div>
-      `;
-      fragment.appendChild(errorItem);
+      console.error(`Error processing repo "${repo.name}": ${error.message}`);
     }
   }
   
   repoList.appendChild(fragment);
-  
-  // Add refresh button after all repos
-  const refreshItem = document.createElement('li');
-  refreshItem.innerHTML = `
-    <button onclick="clearGitHubCache()" style="background: var(--bg-0d1117); border: 1px solid var(--border-30363d); color: var(--muted-c9d1d9); padding: 5px 10px; border-radius: 6px; cursor: pointer; margin-top: 10px;">
-      Refresh Repository Data
-    </button>
-  `;
-  repoList.appendChild(refreshItem);
 }
 
-function clearGitHubCache(reload = true) {
+// Make clearGitHubCache global so it can be called from onclick
+window.clearGitHubCache = function(reload = true) {
   localStorage.removeItem(CACHE_KEYS.REPOS);
   localStorage.removeItem(CACHE_KEYS.TIMESTAMP);
   localStorage.removeItem(CACHE_KEYS.LANGUAGES);
-  localStorage.removeItem(CACHE_KEYS.VERSION); // Clear cache version
+  localStorage.removeItem(CACHE_KEYS.VERSION); 
   if (reload) {
     fetchRepos();
   }
-}
+};
