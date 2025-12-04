@@ -9,7 +9,7 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 camera.position.z = 5;
 
 // Renderer
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
@@ -93,10 +93,10 @@ vignetteShape.lineTo(-w/2, h/2);
 vignetteShape.closePath();
 
 const hole = new THREE.Path();
-hole.absellipse(0, 0, 4.5, 2, 0, Math.PI * 2, false, 0);//desc: x, y, xRadius, yRadius, startAngle, endAngle, clockwise, rotation
+hole.absellipse(0, 0, 4.5, 2, 0, Math.PI * 2, true, 0);//desc: x, y, xRadius, yRadius, startAngle, endAngle, clockwise, rotation
 vignetteShape.holes.push(hole);
 
-const vignetteGeometry = new THREE.ShapeGeometry(vignetteShape);
+const vignetteGeometry = new THREE.ShapeGeometry(vignetteShape, 64);
 
 const vignetteMaterial = new THREE.ShaderMaterial({
     uniforms: {
@@ -169,13 +169,16 @@ window.addEventListener('click', () => {
 
 // Scroll Interaction
 let starScrollRotation = 0;
+let isHoveringButton = false;
+let continuousRotation = 0;
+
 window.addEventListener('wheel', (event) => {
     const rotation = event.deltaY * 0.002;
     outerCircle.rotation.z += rotation;
     midCircle.rotation.z += rotation;
     innerCircle.rotation.z += rotation;
     outlineCircle.rotation.z += rotation;
-    starScrollRotation += rotation;
+    // Removed starScrollRotation update
 });
 
 // Animation Loop
@@ -215,8 +218,13 @@ function animate(time) {
         outerStar.scale.set(currentScaleStar, currentScaleStar, 1);
         innerStar.scale.set(currentScaleStar, currentScaleStar, 1);
         
-        // Rotate 60 degrees (3*Math.PI/4) + scroll rotation
-        const currentRotation = ((3*Math.PI / 4) * starEase) + starScrollRotation;
+        // Infinite rotation on hover
+        if (isHoveringButton) {
+            continuousRotation += 0.05; // Adjust speed here
+        }
+
+        // Rotate 60 degrees (3*Math.PI/4) + continuous rotation
+        const currentRotation = ((3*Math.PI / 4) * starEase) + continuousRotation;
         outerStar.rotation.z = currentRotation;
         innerStar.rotation.z = currentRotation;
 
@@ -335,6 +343,15 @@ document.querySelectorAll('.page-content h1').forEach(h1 => {
 
 // Button Click Transition
 document.querySelectorAll('.corner-btn').forEach(btn => {
+    // Hover Effect (Infinite Spin)
+    btn.addEventListener('mouseenter', () => {
+        isHoveringButton = true;
+    });
+    
+    btn.addEventListener('mouseleave', () => {
+        isHoveringButton = false;
+    });
+
     btn.addEventListener('click', (e) => {
         const rect = btn.getBoundingClientRect();
         const x = rect.left + rect.width / 2;
