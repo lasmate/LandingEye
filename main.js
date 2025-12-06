@@ -341,6 +341,113 @@ document.querySelectorAll('.page-content h1').forEach(h1 => {
     });
 });
 
+// Reusable Open Section Function
+function openSection(x, y, targetId, colorElement) {
+    // Calculate radius to cover screen
+    const w = Math.max(x, window.innerWidth - x);
+    const h = Math.max(y, window.innerHeight - y);
+    const radius = Math.sqrt(w * w + h * h);
+
+    // Colors
+    let mainColor = 'rgb(33, 150, 243)'; // Default blue
+    if (colorElement) {
+        const computedStyle = window.getComputedStyle(colorElement);
+        mainColor = computedStyle.backgroundColor;
+        // If background is transparent (e.g. menu items), use a default
+        if (mainColor === 'rgba(0, 0, 0, 0)' || mainColor === 'transparent') {
+             mainColor = 'rgb(33, 33, 33)';
+        }
+    }
+    
+    const darkColor = darkenRgb(mainColor, 20);
+
+    // Create Dark Circle (Background)
+    const darkCircle = document.createElement('div');
+    darkCircle.classList.add('transition-circle');
+    darkCircle.style.backgroundColor = darkColor;
+    darkCircle.style.zIndex = '199'; // Behind main circle
+    darkCircle.style.width = `${radius * 2}px`;
+    darkCircle.style.height = `${radius * 2}px`;
+    darkCircle.style.left = `${x - radius}px`;
+    darkCircle.style.top = `${y - radius}px`;
+    document.body.appendChild(darkCircle);
+
+    // Create Main Circle (Foreground)
+    const circle = document.createElement('div');
+    circle.classList.add('transition-circle');
+    circle.style.backgroundColor = mainColor;
+    circle.style.width = `${radius * 2}px`;
+    circle.style.height = `${radius * 2}px`;
+    circle.style.left = `${x - radius}px`;
+    circle.style.top = `${y - radius}px`;
+    document.body.appendChild(circle);
+    
+    // Force reflow
+    darkCircle.getBoundingClientRect();
+    circle.getBoundingClientRect();
+    
+    // Animate with delay for layering effect
+    darkCircle.style.transform = 'scale(1)';
+    setTimeout(() => {
+        circle.style.transform = 'scale(1)';
+    }, 100);
+
+    // Show Content
+    const content = document.getElementById(targetId);
+    if (content) {
+        content.classList.add('active');
+        // Fade in after circle covers screen (approx 500ms + delay)
+        setTimeout(() => {
+            content.style.opacity = '1';
+        }, 600);
+    }
+
+    // Create Close Button
+    const closeBtn = document.createElement('button');
+    closeBtn.classList.add('corner-btn', 'close-btn'); // Use corner-btn class for shape
+    
+    // Position close button
+    if (colorElement && colorElement.classList.contains('corner-btn')) {
+         closeBtn.className = colorElement.className;
+         closeBtn.classList.add('close-btn');
+    } else {
+        // Default position for menu items (Top Right)
+        closeBtn.style.position = 'fixed';
+        closeBtn.style.top = '2vh';
+        closeBtn.style.right = '2vw';
+        closeBtn.classList.add('close-btn');
+    }
+    
+    closeBtn.innerHTML = '<span class="material-symbols-outlined">close</span>';
+    document.body.appendChild(closeBtn);
+    
+    closeBtn.addEventListener('click', () => {
+        // Hide content
+        if (content) {
+            content.style.opacity = '0';
+            setTimeout(() => {
+                content.classList.remove('active');
+            }, 500);
+        }
+
+        circle.style.transform = 'scale(0)';
+        setTimeout(() => {
+            darkCircle.style.transform = 'scale(0)';
+        }, 100); // Delay dark circle closing
+
+        closeBtn.remove();
+        
+        // Remove circles after animation
+        darkCircle.addEventListener('transitionend', () => {
+            darkCircle.remove();
+        }, { once: true });
+        
+        circle.addEventListener('transitionend', () => {
+            circle.remove();
+        }, { once: true });
+    });
+}
+
 // Button Click Transition
 document.querySelectorAll('.corner-btn').forEach(btn => {
     // Hover Effect (Infinite Spin)
@@ -356,92 +463,9 @@ document.querySelectorAll('.corner-btn').forEach(btn => {
         const rect = btn.getBoundingClientRect();
         const x = rect.left + rect.width / 2;
         const y = rect.top + rect.height / 2;
-
-        // Calculate radius to cover screen (distance to furthest corner)
-        const w = Math.max(x, window.innerWidth - x);
-        const h = Math.max(y, window.innerHeight - y);
-        const radius = Math.sqrt(w * w + h * h);
-
-        // Colors
-        const computedStyle = window.getComputedStyle(btn);
-        const mainColor = computedStyle.backgroundColor;
-        const darkColor = darkenRgb(mainColor, 20);
-
-        // Create Dark Circle (Background)
-        const darkCircle = document.createElement('div');
-        darkCircle.classList.add('transition-circle');
-        darkCircle.style.backgroundColor = darkColor;
-        darkCircle.style.zIndex = '199'; // Behind main circle
-        darkCircle.style.width = `${radius * 2}px`;
-        darkCircle.style.height = `${radius * 2}px`;
-        darkCircle.style.left = `${x - radius}px`;
-        darkCircle.style.top = `${y - radius}px`;
-        document.body.appendChild(darkCircle);
-
-        // Create Main Circle (Foreground)
-        const circle = document.createElement('div');
-        circle.classList.add('transition-circle');
-        circle.style.backgroundColor = mainColor;
-        circle.style.width = `${radius * 2}px`;
-        circle.style.height = `${radius * 2}px`;
-        circle.style.left = `${x - radius}px`;
-        circle.style.top = `${y - radius}px`;
-        document.body.appendChild(circle);
-        
-        // Force reflow
-        darkCircle.getBoundingClientRect();
-        circle.getBoundingClientRect();
-        
-        // Animate with delay for layering effect
-        darkCircle.style.transform = 'scale(1)';
-        setTimeout(() => {
-            circle.style.transform = 'scale(1)';
-        }, 100);
-
-        // Show Content
         const targetId = btn.getAttribute('data-target');
-        const content = document.getElementById(targetId);
-        if (content) {
-            content.classList.add('active');
-            // Fade in after circle covers screen (approx 500ms + delay)
-            setTimeout(() => {
-                content.style.opacity = '1';
-            }, 600);
-        }
-
-        // Create Close Button
-        const closeBtn = document.createElement('button');
-        closeBtn.className = btn.className; // Copy positioning classes
-        closeBtn.classList.add('close-btn');
-        closeBtn.innerHTML = '<span class="material-symbols-outlined">close</span>';
         
-        document.body.appendChild(closeBtn);
-        
-        closeBtn.addEventListener('click', () => {
-            // Hide content
-            if (content) {
-                content.style.opacity = '0';
-                setTimeout(() => {
-                    content.classList.remove('active');
-                }, 500);
-            }
-
-            circle.style.transform = 'scale(0)';
-            setTimeout(() => {
-                darkCircle.style.transform = 'scale(0)';
-            }, 100); // Delay dark circle closing
-
-            closeBtn.remove();
-            
-            // Remove circles after animation
-            darkCircle.addEventListener('transitionend', () => {
-                darkCircle.remove();
-            }, { once: true });
-            
-            circle.addEventListener('transitionend', () => {
-                circle.remove();
-            }, { once: true });
-        });
+        openSection(x, y, targetId, btn);
     });
 });
 
@@ -449,6 +473,16 @@ document.querySelectorAll('.corner-btn').forEach(btn => {
 const menuItems = document.querySelectorAll('.top-menu-dropdown a, .bottom-menu-dropdown a');
 
 menuItems.forEach(item => {
+    // Click Event for Menu Items
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.getAttribute('href').substring(1); // Remove #
+        const x = window.innerWidth / 2;
+        const y = window.innerHeight / 2;
+        
+        openSection(x, y, targetId, item);
+    });
+
     item.dataset.value = item.innerText;
     
     item.addEventListener('mouseenter', () => {
