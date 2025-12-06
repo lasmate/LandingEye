@@ -445,4 +445,69 @@ document.querySelectorAll('.corner-btn').forEach(btn => {
     });
 });
 
+// Top Menu Text Scramble Effect
+const menuItems = document.querySelectorAll('.top-menu-dropdown a');
+
+menuItems.forEach(item => {
+    item.dataset.value = item.innerText;
+    
+    item.addEventListener('mouseenter', () => {
+        const targetText = item.dataset.value;
+        const targetTextArray = targetText.split('');
+        
+        const paths = targetTextArray.map((char) => {
+            if (char === ' ') return [char];
+            
+            const targetCode = char.charCodeAt(0);
+            let startCode;
+            
+            // Pick a random start code
+            if (targetCode >= 65 && targetCode <= 90) {
+                do {
+                    startCode = 65 + Math.floor(Math.random() * 26);
+                } while (Math.abs(startCode - targetCode) < 5);
+            } else if (targetCode >= 97 && targetCode <= 122) {
+                do {
+                    startCode = 97 + Math.floor(Math.random() * 26);
+                } while (Math.abs(startCode - targetCode) < 5);
+            } else {
+                startCode = targetCode;
+            }
+            
+            const path = [];
+            if (startCode < targetCode) {
+                for (let c = startCode; c <= targetCode; c++) path.push(String.fromCharCode(c));
+            } else {
+                for (let c = startCode; c >= targetCode; c--) path.push(String.fromCharCode(c));
+            }
+            return path;
+        });
+        
+        let frame = 0;
+        const maxFrames = Math.max(...paths.map(p => p.length));
+        
+        if (item.interval) clearInterval(item.interval);
+        
+        item.interval = setInterval(() => {
+            let newText = "";
+            
+            for (let i = 0; i < targetTextArray.length; i++) {
+                const path = paths[i];
+                if (frame < path.length) {
+                    newText += path[frame];
+                } else {
+                    newText += path[path.length - 1];
+                }
+            }
+            
+            item.innerText = newText;
+            frame++;
+            
+            if (frame >= maxFrames) {
+                clearInterval(item.interval);
+            }
+        }, 30);
+    });
+});
+
 animate();
