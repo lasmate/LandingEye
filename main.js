@@ -445,8 +445,8 @@ document.querySelectorAll('.corner-btn').forEach(btn => {
     });
 });
 
-// Top Menu Text Scramble Effect
-const menuItems = document.querySelectorAll('.top-menu-dropdown a');
+// Top and Bottom Menu Text Scramble Effect
+const menuItems = document.querySelectorAll('.top-menu-dropdown a, .bottom-menu-dropdown a');
 
 menuItems.forEach(item => {
     item.dataset.value = item.innerText;
