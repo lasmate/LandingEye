@@ -207,18 +207,34 @@ canvas {
     & p {
         font-family: sans-serif;
         font-size: 1.1rem;
-        line-height: 1.4;
+        line-height: 1.6;
         max-width: 800px;
+        margin-bottom: 1.2rem;
+    }
+
+    & ul {
+        font-family: sans-serif;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-left: 20px;
+        margin-bottom: 2rem;
+    }
+
+    & li {
+        margin-bottom: 0.5rem;
     }
 }
+
 @keyframes breathe {
     0% { font-variation-settings: "wght" 100; }
     50% { font-variation-settings: "wght" 900; }
     100% { font-variation-settings: "wght" 100; }
 }
+
 /* Carousel */
 .carousel-section {
     margin-bottom: 40px;
+
     & h2 {
         font-family: var(--font-main);
         font-size: 1.5rem;
@@ -226,27 +242,32 @@ canvas {
         font-weight: 400;
     }
 }
+
 .carousel {
     display: flex;
     overflow-x: auto;
-    gap: 25px;
+    gap: 15px;
     padding-bottom: 20px;
     scrollbar-width: thin;
     scrollbar-color: rgba(0,0,0,0.2) transparent;
     -webkit-overflow-scrolling: touch;
+
     &::-webkit-scrollbar {
         height: 8px;
     }
+
     &::-webkit-scrollbar-track {
         background: transparent;
     }
+
     &::-webkit-scrollbar-thumb {
         background-color: rgba(0,0,0,0.2);
         border-radius: 4px;
     }
+
     & .carousel-item {
-        flex: 0 0 250px;
-        height: 150px;
+        flex: 0 0 300px;
+        height: 190px;
         background-color: rgba(255, 255, 255, 0.5);
         border-radius: 12px;
         display: flex;
