@@ -212,7 +212,7 @@ function animate(time) {
         
         // Infinite rotation on hover
         if (isHoveringButton) {
-            continuousRotation += 0.12; // Adjust speed here
+            continuousRotation += 0.05; // Adjust speed here
         }
 
         // Rotate 60 degrees (3*Math.PI/4) + continuous rotation
@@ -274,10 +274,8 @@ function animate(time) {
         innerStar.geometry.dispose();
         innerStar.geometry = new THREE.ShapeGeometry(newInnerStarShape);
 
-    } else {
-        outerStar.rotation.z = starScrollRotation;
-        innerStar.rotation.z = starScrollRotation;
-    }
+    } 
+
 
     // Mouse follow rotation (tilt)
     const maxTilt = 0.3; // Adjust for more/less tilt
