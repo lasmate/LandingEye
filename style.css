@@ -350,6 +350,14 @@ canvas {
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         font-family: var(--font-main);
         transition: transform 0.2s ease, background-color 0.2s ease;
+        overflow: hidden;
+        
+        & img {
+            max-width: 20vw;
+            max-height: 20vh;
+            object-fit: cover;
+            transform: scale(1.1);
+        }
         
         &:hover {
             transform: scale(1.05);
