@@ -312,6 +312,61 @@ canvas {
     }
 }
 
+/* Hobbies Grid */
+.hobbies-container {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.hobbies-section {
+    margin-bottom: 40px;
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    
+    & h2 {
+        font-family: var(--font-main);
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        font-weight: 400;
+    }
+}
+
+.hobbies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    
+    & .hobbies-item {
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        font-family: var(--font-main);
+        transition: transform 0.2s ease, background-color 0.2s ease;
+        overflow: hidden;
+        
+        & img {
+            max-width: 20vw;
+            max-height: 20vh;
+            object-fit: cover;
+            transform: scale(1.1);
+        }
+        
+        &:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 1;
+        }
+    }
+}
+
 /* Transitions */
 .transition-circle {
     position: absolute;

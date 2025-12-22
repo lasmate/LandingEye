@@ -168,18 +168,10 @@ window.addEventListener('click', () => {
 });
 
 // Scroll Interaction
-let starScrollRotation = 0;
+
 let isHoveringButton = false;
 let continuousRotation = 0;
 
-window.addEventListener('wheel', (event) => {
-    const rotation = event.deltaY * 0.002;
-    outerCircle.rotation.z += rotation;
-    midCircle.rotation.z += rotation;
-    innerCircle.rotation.z += rotation;
-    outlineCircle.rotation.z += rotation;
-    // Removed starScrollRotation update
-});
 
 // Animation Loop
 let startTime = null;
@@ -220,7 +212,7 @@ function animate(time) {
         
         // Infinite rotation on hover
         if (isHoveringButton) {
-            continuousRotation += 0.05; // Adjust speed here
+            continuousRotation += 0.12; // Adjust speed here
         }
 
         // Rotate 60 degrees (3*Math.PI/4) + continuous rotation
