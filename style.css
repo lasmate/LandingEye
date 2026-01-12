@@ -277,14 +277,15 @@ canvas {
     }
 
     & .tech-column {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
         padding: 20px;
         background: rgba(0, 0, 0, 0.02);
         border-radius: 8px;
-        min-width: 80px;
+        min-width: 180px;
         align-items: center;
+        justify-items: center;
     }
 
     & .tech-logo {
