@@ -1,6 +1,6 @@
 # LandingEye
 
-**Personal Portfolio Website**
+## Personal Portfolio Website
 
 A modern, interactive portfolio showcasing my work, skills, and projects with a unique 3D-animated landing experience.
 
@@ -34,7 +34,7 @@ LandingEye/
 └── videos/            # 3D model showcase videos
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 1. Clone the repository
 2. Open `index.html` in a modern web browser
