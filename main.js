@@ -1,4 +1,8 @@
 import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+import LanguageManager from './translator.js';
+
+// Initialize language manager
+const languageManager = new LanguageManager();
 
 // Scene
 const scene = new THREE.Scene();

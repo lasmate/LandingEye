@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three.js Project</title>
+    <title>Lya's portfolio</title>
     <link rel="icon" href="https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/transgender/default/24px.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
@@ -14,6 +14,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <!-- Language Switch -->
+    <div class="language-switch">
+        <input type="radio" id="lang-en" name="language" value="en" checked>
+        <input type="radio" id="lang-fr" name="language" value="fr">
+        <label for="lang-en">EN</label>
+        <label for="lang-fr">FR</label>
+    </div>
 
     <button class="corner-btn top-left" data-target="about"><span class="material-symbols-outlined">sentiment_calm</span></button>
     <button class="corner-btn top-right" data-target="news"><span class="material-symbols-outlined">newspaper</span></button>
@@ -38,25 +46,39 @@
 
     <!-- Content Sections -->
     <div id="about" class="page-content">
-        <h1>About</h1>
-        <h3>Hiya, The name's Lya</h3>
-        <p>I'm a passionate Computer Science student and developer with a specialty in front-end web development.</p>
-        <p>I am currently pursuing a degree in Information Software for Organisations (SIO), specializing in Software Solutions and Work Applications (SLAM).</p>
-        
-        <p>To see the technologies I work with, you can check out the <strong>My Work</strong> section of this website (the bottom left button).</p>
+        <h1 data-i18n="about.heading">About</h1>
+        <div class="about-container">
+            <div class="about-text">
+                <h3 data-i18n="about.subheading">Hiya, The name's Lya</h3>
+                <p data-i18n="about.para1">I'm a passionate Computer Science student and developer with a specialty in front-end web development.</p>
+                <p data-i18n="about.para2">I am currently pursuing a degree in Information Software for Organisations (SIO), specializing in Software Solutions and Work Applications (SLAM).</p>
+                
+                <p data-i18n="about.para3">To see the technologies I work with, you can check out the <strong>My Work</strong> section of this website (the bottom left button).</p>
 
-        <p>In my free time, I enjoy diving into new tech, creating 3D models, and exploring new technologies. I plan on specializing in front-end development as I continue my studies, while also investing time in 3D modeling to collaborate with others in the field.</p>
+                <p data-i18n="about.para4">In my free time, I enjoy diving into new tech, creating 3D models, and exploring new technologies. I plan on specializing in front-end development as I continue my studies, while also investing time in 3D modeling to collaborate with others in the field.</p>
 
-        <p>The use of 3D assets in the web-dev world is becoming increasingly important, and I want to be at the forefront of this trend, mixing my two passions.</p>
+                <p data-i18n="about.para5">The use of 3D assets in the web-dev world is becoming increasingly important, and I want to be at the forefront of this trend, mixing my two passions.</p>
 
-        <p>I have plenty of hobbies, but my top 5 would be:</p>  
-        <ul>
-            <li>3D Modelling & 3D Printing</li>
-            <li>Coding (Front-end focus)</li>
-            <li>Watching Anime</li>
-            <li>Playing Story-driven Games</li>
-            <li>Reading Science Fiction Novels (Isaac Asimov my beloved <3)</li>
-        </ul>
+                <p data-i18n="about.para6">I have plenty of hobbies, but my top 5 would be:</p>  
+                <ul>
+                    <li data-i18n="about.hobby1">3D Modelling & 3D Printing</li>
+                    <li data-i18n="about.hobby2">Coding (Front-end focus)</li>
+                    <li data-i18n="about.hobby3">Watching Anime</li>
+                    <li data-i18n="about.hobby4">Playing Story-driven Games</li>
+                    <li data-i18n="about.hobby5">Reading Science Fiction Novels (Isaac Asimov my beloved <3)</li>
+                </ul>
+            </div>
+            <div class="tech-column">
+                <div class="tech-logo" title="HTML5"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5"></div>
+                <div class="tech-logo" title="CSS3"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3"></div>
+                <div class="tech-logo" title="JavaScript"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"></div>
+                <div class="tech-logo" title="C"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C"></div>
+                <div class="tech-logo" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
+                <div class="tech-logo" title="Rust"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg" alt="Rust"></div>
+                <div class="tech-logo" title="Svelte Kit"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg" alt="Svelte Kit"></div>
+                <div class="tech-logo" title="SQL"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL"></div>
+            </div>
+        </div>
     </div>
 
     <div id="news" class="page-content">
@@ -131,6 +153,8 @@
             </div>
             <div class="contact-item">
                 <h3>Location</h3>
+                <p><strong>City:</strong> Toulouse</p>
+                <p><strong>Suburb:</strong> La terrasse</p>
             </div>
         </div>
     </div>

@@ -72,6 +72,45 @@ canvas {
     color: var(--text-color);
 }
 
+/* Language Switch */
+.language-switch {
+    position: fixed;
+    top: 20px;
+    right: 60px;
+    z-index: 150;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 20px;
+    padding: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    & input {
+        display: none;
+    }
+    
+    & label {
+        padding: 8px 16px;
+        cursor: pointer;
+        font-family: var(--font-main);
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #999;
+        transition: all 0.3s ease;
+        border-radius: 16px;
+        user-select: none;
+        
+        &:hover {
+            color: #666;
+        }
+    }
+    
+    & input:checked + label {
+        background-color: var(--accent-color);
+        color: white;
+    }
+}
+
 /* Top Menu */
 .top-menu-container {
     position: fixed;
@@ -222,6 +261,52 @@ canvas {
 
     & li {
         margin-bottom: 0.5rem;
+    }
+
+    /* About Section with Technology Column */
+    & .about-container {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+    }
+
+    & .about-text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    & .tech-column {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.02);
+        border-radius: 8px;
+        min-width: 80px;
+        align-items: center;
+    }
+
+    & .tech-logo {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+        cursor: pointer;
+        
+        &:hover {
+            transform: scale(1.1);
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        & img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+        }
     }
 }
 
