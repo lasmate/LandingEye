@@ -31,16 +31,16 @@
     <!-- Top Hover Menu -->
     <div class="top-menu-container">
         <div class="top-menu-dropdown">
-            <a href="#Blocks">Blocks</a>
-            <a href="#SkillsTable">Skills</a>
+            <a href="#Blocks" data-i18n="menu.blocks">Blocks</a>
+            <a href="#SkillsTable" data-i18n="menu.skills">Skills</a>
         </div>
     </div>
 
     <!-- Bottom Hover Menu -->
     <div class="bottom-menu-container">
         <div class="bottom-menu-dropdown">
-            <a href="#Hobbies">Hobbies</a>
-            <a href="#Bugs">Bugs</a>
+            <a href="#Hobbies" data-i18n="menu.hobbies">Hobbies</a>
+            <a href="#Bugs" data-i18n="menu.bugs">Bugs</a>
         </div>
     </div>
 
@@ -82,23 +82,23 @@
     </div>
 
     <div id="news" class="page-content">
-        <h1>Latest News</h1>
-        <h1>& Journal</h1>
-        <p>Read all about it! Updates and announcements go here.</p>
+        <h1 data-i18n="news.heading">Latest News</h1>
+        <h1 data-i18n="news.subheading">& Journal</h1>
+        <p data-i18n="news.description">Read all about it! Updates and announcements go here.</p>
     </div>
 
     <div id="work" class="page-content">
-        <h1>My Work</h1>
+        <h1 data-i18n="work.heading">My Work</h1>
         
         <div class="carousel-section">
-            <h2>My latest public code projects</h2>
+            <h2 data-i18n="work.projects">My latest public code projects</h2>
             <div class="carousel" id="github-projects-carousel">
                 <div class="carousel-item">Loading...</div>
             </div>
         </div>
 
         <div class="carousel-section">
-            <h2>My latest 3D models</h2>
+            <h2 data-i18n="work.models">My latest 3D models</h2>
             <div class="carousel">
                 <div class="carousel-item">
                     <video src="videos/V8.6-4K-Newcomp.mp4" autoplay loop muted playsinline></video>
@@ -129,53 +129,67 @@
     </div>
 
     <div id="contact" class="page-content">
-        <h1>Get in Touch</h1>
+        <h1 data-i18n="contact.heading">Get in Touch</h1>
         <div class="contact-grid">
             <div class="contact-item">
                 <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
                 <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="lya-lasvenes-3969b8327" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/lya-lasvenes-3969b8327?trk=profile-badge">Lya Lasvenes</a></div>
             </div>
             <div class="contact-item email-section">
-                <h3>Email</h3>
+                <h3 data-i18n="contact.email">Email</h3>
                 <div class="email-list">
                     <div class="email-item">
-                        <span class="email-label">Academic:</span>
+                        <span class="email-label" data-i18n="contact.academic">Academic:</span>
                         <a href="mailto:mateo.lasvenes@limayrac.fr">mateo.lasvenes@limayrac.fr</a>
                     </div>
                     <div class="email-item">
-                        <span class="email-label">Personal:</span>
+                        <span class="email-label" data-i18n="contact.personal">Personal:</span>
                         <a href="mailto:lasvmateo@gmail.com">lasvmateo@gmail.com</a>
                     </div>
                 </div>
             </div>
-            <div class="contact-item">
-                <h3>Social</h3>
+            <div class="contact-item social-section">
+                <h3 data-i18n="contact.social">Social</h3>
+                <div class="social-list">
+                    <div class="social-item">
+                        <span class="social-label">GitHub:</span>
+                        <a href="https://github.com/lasmate" target="_blank">@lasmate</a>
+                    </div>
+                </div>
             </div>
-            <div class="contact-item">
-                <h3>Location</h3>
-                <p><strong>City:</strong> Toulouse</p>
-                <p><strong>Suburb:</strong> La terrasse</p>
+            <div class="contact-item location-section">
+                <h3 data-i18n="contact.location">Location</h3>
+                <div class="location-list">
+                    <div class="location-item">
+                        <span class="location-label" data-i18n="contact.city">City:</span>
+                        <span class="location-value">Toulouse</span>
+                    </div>
+                    <div class="location-item">
+                        <span class="location-label" data-i18n="contact.suburb">Suburb:</span>
+                        <span class="location-value">La terrasse</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- New Sections for Menu Items -->
     <div id="Blocks" class="page-content">
-        <h1>Blocks</h1>
-        <p>Content for Blocks goes here.</p>
+        <h1 data-i18n="blocks.heading">Blocks</h1>
+        <p data-i18n="blocks.description">Content for Blocks goes here.</p>
     </div>
 
     <div id="SkillsTable" class="page-content">
-        <h1>Skills Table</h1>
-        <p>Content for Skills Table goes here.</p>
+        <h1 data-i18n="skillsTable.heading">Skills Table</h1>
+        <p data-i18n="skillsTable.description">Content for Skills Table goes here.</p>
     </div>
 
     <div id="Hobbies" class="page-content">
-        <h1>Hobbies</h1>
+        <h1 data-i18n="hobbies.heading">Hobbies</h1>
         
         <div class="hobbies-container">
             <div class="hobbies-section">
-                <h2>Music 3x3</h2>
+                <h2 data-i18n="hobbies.music">Music 3x3</h2>
                 <div class="hobbies-grid">
                     <div class="hobbies-item"><img src="https://lastfm.freetls.fastly.net/i/u/500x500/b74dc22e72de2839db17e7e04b41e8f8.jpg" alt="Joji - Smithereens"></div>
                     <div class="hobbies-item"><img src="https://lastfm.freetls.fastly.net/i/u/300x300/757bab4e1dea77635231da9868442115.jpg" alt="Teddylloyd"></div>
@@ -190,7 +204,7 @@
             </div>
 
             <div class="hobbies-section">
-                <h2>Movies/Anime 3x3</h2>
+                <h2 data-i18n="hobbies.movies">Movies/Anime 3x3</h2>
                 <div class="hobbies-grid movies-anime-grid">
                     <div class="hobbies-item"><img src="https://upload.wikimedia.org/wikipedia/en/c/ca/Ghostintheshellposter.jpg" alt="Ghost in the Shell"></div>
                     <div class="hobbies-item"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3f/The_Empire_Strikes_Back_(1980_film).jpg/250px-The_Empire_Strikes_Back_(1980_film).jpg" alt="Starwars 1-6"></div>
@@ -207,17 +221,17 @@
     </div>
 
     <div id="Bugs" class="page-content">
-        <h1>Bugs</h1>
-        <h3>Have i told you i love bugs </h3>
-        <h6>Becasue i do! a lot!</h6>
-        <p>isopod time</p>
+        <h1 data-i18n="bugs.heading">Bugs</h1>
+        <h3 data-i18n="bugs.love">Have i told you i love bugs </h3>
+        <h6 data-i18n="bugs.because">Becasue i do! a lot!</h6>
+        <p data-i18n="bugs.time">isopod time</p>
         
         <table class="bugs-table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Species</th>
-                    <th>Why i love them</th>
+                    <th data-i18n="bugs.name">Name</th>
+                    <th data-i18n="bugs.species">Species</th>
+                    <th data-i18n="bugs.why">Why i love them</th>
                 </tr>
             </thead>
             <tbody>

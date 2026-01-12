@@ -76,7 +76,7 @@ canvas {
 .language-switch {
     position: fixed;
     top: 20px;
-    right: 60px;
+    right: 80px;
     z-index: 150;
     display: flex;
     align-items: center;
@@ -105,7 +105,8 @@ canvas {
         }
     }
     
-    & input:checked + label {
+    & input#lang-en:checked ~ label[for="lang-en"],
+    & input#lang-fr:checked ~ label[for="lang-fr"] {
         background-color: var(--accent-color);
         color: white;
     }
@@ -439,6 +440,91 @@ canvas {
                 color: #0066cc;
                 text-decoration: underline;
             }
+        }
+    }
+}
+
+/* Social Section */
+.social-section {
+    flex-direction: column;
+    gap: 15px;
+    
+    & h3 {
+        margin: 0 0 10px 0;
+        font-family: var(--font-main);
+        font-size: 1.5rem;
+    }
+    
+    & .social-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    & .social-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+        
+        & .social-label {
+            font-family: var(--font-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.6);
+        }
+        
+        & a {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            
+            &:hover {
+                color: #0066cc;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+/* Location Section */
+.location-section {
+    flex-direction: column;
+    gap: 15px;
+    
+    & h3 {
+        margin: 0 0 10px 0;
+        font-family: var(--font-main);
+        font-size: 1.5rem;
+    }
+    
+    & .location-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    & .location-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+        
+        & .location-label {
+            font-family: var(--font-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.6);
+        }
+        
+        & .location-value {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: var(--text-color);
         }
     }
 }
