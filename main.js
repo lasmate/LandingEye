@@ -412,10 +412,11 @@ function openSection(x, y, targetId, colorElement) {
         closeBtn.classList.add('close-btn');
     }
     
-    closeBtn.innerHTML = '<span class="material-symbols-outlined">close</span>';
+    closeBtn.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">close</span>';
+    closeBtn.setAttribute('aria-label', 'Close section');
     document.body.appendChild(closeBtn);
     
-    closeBtn.addEventListener('click', () => {
+    const closeSection = () => {
         // Hide content
         if (content) {
             content.style.opacity = '0';
@@ -439,7 +440,20 @@ function openSection(x, y, targetId, colorElement) {
         circle.addEventListener('transitionend', () => {
             circle.remove();
         }, { once: true });
-    });
+        
+        // Remove escape key listener
+        document.removeEventListener('keydown', escapeHandler);
+    };
+    
+    closeBtn.addEventListener('click', closeSection);
+    
+    // Add Escape key handler
+    const escapeHandler = (e) => {
+        if (e.key === 'Escape') {
+            closeSection();
+        }
+    };
+    document.addEventListener('keydown', escapeHandler);
 }
 
 // Button Click Transition
