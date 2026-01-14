@@ -403,20 +403,17 @@ canvas {
 .email-section {
     flex-direction: column;
     gap: 15px;
-    
     & h3 {
         margin: 0 0 10px 0;
         font-family: var(--font-main);
         font-size: 1.5rem;
     }
-    
     & .email-list {
         display: flex;
         flex-direction: column;
         gap: 10px;
         width: 100%;
     }
-    
     & .email-item {
         display: flex;
         flex-direction: column;
@@ -449,20 +446,17 @@ canvas {
 .social-section {
     flex-direction: column;
     gap: 15px;
-    
     & h3 {
         margin: 0 0 10px 0;
         font-family: var(--font-main);
         font-size: 1.5rem;
     }
-    
     & .social-list {
         display: flex;
         flex-direction: column;
         gap: 10px;
         width: 100%;
     }
-    
     & .social-item {
         display: flex;
         flex-direction: column;
@@ -508,20 +502,17 @@ canvas {
         gap: 10px;
         width: 100%;
     }
-    
     & .location-item {
         display: flex;
         flex-direction: column;
         gap: 5px;
         text-align: center;
-        
         & .location-label {
             font-family: var(--font-main);
             font-size: 0.9rem;
             font-weight: 600;
             color: rgba(0, 0, 0, 0.6);
         }
-        
         & .location-value {
             font-family: var(--font-mono);
             font-size: 0.95rem;
@@ -592,7 +583,6 @@ canvas {
         max-height: 20vh;
         transform: scale(1.1);
     }
-    
     /* Specific grid variants with proper aspect ratios */
     &.music-grid {
         aspect-ratio: 1 / 1;
