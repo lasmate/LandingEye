@@ -52,7 +52,9 @@ const translations = {
         hobbies: {
             heading: "Hobbies",
             music: "Music 3x3",
-            movies: "Movies/Anime 3x3"
+            movies: "Movies/Anime 3x3",
+            games: "Games 3x3",
+            books: "Books 3x3"
         },
         bugs: {
             heading: "Bugs",
@@ -117,7 +119,9 @@ const translations = {
         hobbies: {
             heading: "Loisirs",
             music: "Musique 3x3",
-            movies: "Films/Anime 3x3"
+            movies: "Films/Anime 3x3",
+            games: "Jeux 3x3",
+            books: "Livres 3x3"
         },
         bugs: {
             heading: "Insectes",
