@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lasmate.github.io/LandingEye/sitemap.xml

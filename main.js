@@ -336,6 +336,64 @@ document.querySelectorAll('.page-content h1').forEach(h1 => {
 });
 
 // Reusable Open Section Function
+const DEFAULT_SEO = {
+    title: "Lya's Portfolio",
+    description: 'Portfolio of Lya Lasvenes, front-end developer and Computer Science student showcasing web projects, 3D work, and technical skills.'
+};
+
+const SECTION_SEO = {
+    about: {
+        title: "About | Lya's Portfolio",
+        description: 'Learn about Lya Lasvenes, front-end developer, studies, interests, and technical background.'
+    },
+    news: {
+        title: "Latest News | Lya's Portfolio",
+        description: 'Recent updates, announcements, and journal entries from Lya\'s portfolio.'
+    },
+    work: {
+        title: "My Work | Lya's Portfolio",
+        description: 'Explore Lya\'s latest public code projects and 3D model work.'
+    },
+    contact: {
+        title: "Contact | Lya's Portfolio",
+        description: 'Get in touch with Lya Lasvenes for opportunities, collaboration, and project discussions.'
+    },
+    Blocks: {
+        title: "Blocks | Lya's Portfolio",
+        description: 'Additional portfolio content and modular showcase blocks.'
+    },
+    SkillsTable: {
+        title: "Skills | Lya's Portfolio",
+        description: 'Overview of technical skills and tools used by Lya Lasvenes.'
+    },
+    Hobbies: {
+        title: "Hobbies | Lya's Portfolio",
+        description: 'Personal interests including music, movies, anime, games, and books.'
+    },
+    Bugs: {
+        title: "Bugs | Lya's Portfolio",
+        description: 'A personal section dedicated to favorite critters and isopod content.'
+    }
+};
+
+function updateSeoMeta(sectionId) {
+    const seo = SECTION_SEO[sectionId] || DEFAULT_SEO;
+    document.title = seo.title;
+
+    const descriptionTag = document.querySelector('#meta-description');
+    const ogTitleTag = document.querySelector('#meta-og-title');
+    const ogDescriptionTag = document.querySelector('#meta-og-description');
+    const twitterTitleTag = document.querySelector('#meta-twitter-title');
+    const twitterDescriptionTag = document.querySelector('#meta-twitter-description');
+
+    if (descriptionTag) descriptionTag.setAttribute('content', seo.description);
+    if (ogTitleTag) ogTitleTag.setAttribute('content', seo.title);
+    if (ogDescriptionTag) ogDescriptionTag.setAttribute('content', seo.description);
+    if (twitterTitleTag) twitterTitleTag.setAttribute('content', seo.title);
+    if (twitterDescriptionTag) twitterDescriptionTag.setAttribute('content', seo.description);
+}
+
+// Reusable Open Section Function
 function openSection(x, y, targetId, colorElement) {
     // Calculate radius to cover screen
     const w = Math.max(x, window.innerWidth - x);
@@ -394,6 +452,7 @@ function openSection(x, y, targetId, colorElement) {
         setTimeout(() => {
             content.style.opacity = '1';
         }, 600);
+        updateSeoMeta(targetId);
     }
 
     // Create Close Button
@@ -431,6 +490,7 @@ function openSection(x, y, targetId, colorElement) {
         }, 100); // Delay dark circle closing
 
         closeBtn.remove();
+        updateSeoMeta();
         
         // Remove circles after animation
         darkCircle.addEventListener('transitionend', () => {
