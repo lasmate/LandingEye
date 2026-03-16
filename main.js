@@ -366,6 +366,10 @@ const SECTION_SEO = {
         title: "Skills | Lya's Portfolio",
         description: 'Overview of technical skills and tools used by Lya Lasvenes.'
     },
+    Testimonials: {
+        title: "Testimonials | Lya's Portfolio",
+        description: 'Read recommendations from collaborators, mentors, and teachers.'
+    },
     Hobbies: {
         title: "Hobbies | Lya's Portfolio",
         description: 'Personal interests including music, movies, anime, games, and books.'

@@ -38,12 +38,53 @@ const translations = {
         menu: {
             blocks: "Blocks",
             skills: "Skills",
+            testimonials: "Testimonials",
             hobbies: "Hobbies",
             bugs: "Bugs"
         },
         blocks: {
             heading: "Blocks",
-            description: "Content for Blocks goes here."
+            description: "Experience timeline and proof of execution for the skills used.",
+            timelineHeading: "Experience Timeline",
+            proofHeading: "Proof of Execution by Skill",
+            exp1: {
+                title: "SIO SLAM Studies — Software Projects",
+                period: "2024 — Present",
+                summary: "Built and maintained coursework projects focused on front-end interfaces, data handling, and practical software delivery.",
+                proof1: "Built responsive interfaces using HTML, CSS, and JavaScript across multiple assignments.",
+                proof2: "Used SQL-backed data workflows in practical school projects.",
+                proof3: "Worked with Git/GitHub to version and publish code deliverables."
+            },
+            exp2: {
+                title: "Personal Portfolio & Creative Engineering",
+                period: "2025 — Present",
+                summary: "Designed and shipped personal products combining front-end development and 3D visual work.",
+                proof1: "Implemented interactive Three.js scenes and section-based UI transitions.",
+                proof2: "Integrated dynamic GitHub project fetching and content caching in JavaScript.",
+                proof3: "Produced 3D model showcases and embedded optimized video loops in the portfolio."
+            },
+            skill: {
+                htmlcss: "Built fully custom layouts, animated section reveals, and responsive portfolio pages.",
+                js: "Added language switching, interactive navigation logic, API fetching, and local caching.",
+                three: "Created and tuned a real-time animated landing scene with custom geometry and shaders.",
+                sql: "Applied relational database concepts in SIO SLAM project work and practical exercises."
+            }
+        },
+        testimonials: {
+            heading: "Testimonials",
+            description: "Recommendations from collaborators, teachers, and mentors.",
+            item1: {
+                quote: "“Lya brings strong curiosity, clean execution, and a real ability to iterate quickly.”",
+                author: "— Placeholder, Instructor"
+            },
+            item2: {
+                quote: "“Reliable teammate with a clear front-end focus and strong visual sense.”",
+                author: "— Placeholder, Project Teammate"
+            },
+            item3: {
+                quote: "“Great mix of technical and creative skills, especially in web + 3D presentation.”",
+                author: "— Placeholder, Mentor"
+            }
         },
         skillsTable: {
             heading: "Skills Table",
@@ -105,12 +146,53 @@ const translations = {
         menu: {
             blocks: "Blocs",
             skills: "Compétences",
+            testimonials: "Témoignages",
             hobbies: "Loisirs",
             bugs: "Insectes"
         },
         blocks: {
             heading: "Blocs",
-            description: "Le contenu des Blocs va ici."
+            description: "Frise d'expériences et preuves d'exécution des compétences utilisées.",
+            timelineHeading: "Frise d'Expérience",
+            proofHeading: "Preuves d'Exécution par Compétence",
+            exp1: {
+                title: "Études SIO SLAM — Projets Logiciels",
+                period: "2024 — Aujourd'hui",
+                summary: "Conception et maintenance de projets scolaires centrés sur les interfaces front-end, la gestion de données et la livraison logicielle.",
+                proof1: "Création d'interfaces responsives avec HTML, CSS et JavaScript sur plusieurs projets.",
+                proof2: "Utilisation de flux de données avec SQL dans des projets pratiques.",
+                proof3: "Utilisation de Git/GitHub pour versionner et publier les livrables."
+            },
+            exp2: {
+                title: "Portfolio Personnel & Ingénierie Créative",
+                period: "2025 — Aujourd'hui",
+                summary: "Conception et livraison de projets personnels combinant développement front-end et production visuelle 3D.",
+                proof1: "Implémentation de scènes Three.js interactives et de transitions d'interface par section.",
+                proof2: "Intégration de récupération dynamique de projets GitHub et de cache local en JavaScript.",
+                proof3: "Production de vitrines de modèles 3D et intégration de vidéos optimisées dans le portfolio."
+            },
+            skill: {
+                htmlcss: "Création de mises en page sur mesure, transitions animées et pages de portfolio responsives.",
+                js: "Ajout du changement de langue, de la navigation interactive, des appels API et du cache local.",
+                three: "Création et ajustement d'une scène d'atterrissage animée en temps réel avec géométrie et shaders personnalisés.",
+                sql: "Application de concepts de bases de données relationnelles dans les projets SIO SLAM et les exercices pratiques."
+            }
+        },
+        testimonials: {
+            heading: "Témoignages",
+            description: "Recommandations de collaborateurs, enseignants et mentors.",
+            item1: {
+                quote: "« Lya fait preuve d'une grande curiosité, d'une exécution propre et d'une vraie capacité à itérer rapidement. »",
+                author: "— Exemple, Enseignant"
+            },
+            item2: {
+                quote: "« Coéquipière fiable avec un fort focus front-end et un bon sens visuel. »",
+                author: "— Exemple, Coéquipier de projet"
+            },
+            item3: {
+                quote: "« Excellent mélange de compétences techniques et créatives, surtout en web + 3D. »",
+                author: "— Exemple, Mentor"
+            }
         },
         skillsTable: {
             heading: "Tableau des Compétences",
