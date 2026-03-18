@@ -47,6 +47,22 @@ const translations = {
             description: "Experience timeline and proof of execution for the skills used.",
             timelineHeading: "Experience Timeline",
             proofHeading: "Proof of Execution by Skill",
+            exp4: {
+                title: "Freelance Front-end Developer",
+                period: "2025 — Present",
+                summary: "Providing freelance front-end development services, specializing in creating visually engaging and user-friendly websites.",
+                proof1: "Designed and developed custom front-end solutions for clients using the Wix tech stack.",
+                proof2: "Implemented interactive features and animations to enhance user engagement and accessibility.",
+                proof3: "Collaborated directly with clients to adapt designs and deliver production-ready pages."
+            },
+            exp3: {
+                title: "First Internship During SIO",
+                period: "2025",
+                summary: "Collaborated with clients to design and implement custom front-end solutions for websites and web applications.",
+                proof1: "Developed responsive, user-friendly interfaces using a Svelte and Rust tech stack.",
+                proof2: "Implemented interactive features and animations to improve engagement and accessibility.",
+                proof3: "Worked within existing codebases and delivered maintainable front-end components."
+            },
             exp1: {
                 title: "SIO SLAM Studies — Software Projects",
                 period: "2024 — Present",
@@ -63,11 +79,23 @@ const translations = {
                 proof2: "Integrated dynamic GitHub project fetching and content caching in JavaScript.",
                 proof3: "Produced 3D model showcases and embedded optimized video loops in the portfolio."
             },
+            exp0: {
+                title: "Early Coding & 3D Exploration",
+                period: "2019 — 2024",
+                summary: "Started coding in middle school with Python, then explored web development and 3D modeling in high school.",
+                proof1: "Built simple Python projects like a text-based adventure game and a calculator.",
+                proof2: "Created personal websites using HTML/CSS and experimented with JavaScript.",
+                proof3: "Dabbled in 3D modeling with Blender, creating basic models and animations."
+            },
             skill: {
-                htmlcss: "Built fully custom layouts, animated section reveals, and responsive portfolio pages.",
-                js: "Added language switching, interactive navigation logic, API fetching, and local caching.",
-                three: "Created and tuned a real-time animated landing scene with custom geometry and shaders.",
-                sql: "Applied relational database concepts in SIO SLAM project work and practical exercises."
+                card1Title: "Portfolio Front-end",
+                card1Body: "Built and iterated static portfolio sites in LandingEye and LyasAxesWeb with responsive layouts, section navigation, and polished UI structure.",
+                card2Title: "Interactive Web Logic",
+                card2Body: "Implemented practical JavaScript flows in LandingEye, including language switching, GitHub API project fetching, caching, and interactive UI behavior.",
+                card3Title: "Data-driven Web Apps",
+                card3Body: "Developed PHP/SQL app features in PizApp and ML2-AppFAQ: authentication flows, CRUD-style content handling, cart/order workflows, and structured relational schemas.",
+                card4Title: "Multi-language Software",
+                card4Body: "Built non-trivial apps beyond the browser, including MiniPomo (Rust + Slint) and TarotReader (Java + OCaml) with local state and user-driven command flows."
             }
         },
         testimonials: {
@@ -155,6 +183,22 @@ const translations = {
             description: "Frise d'expériences et preuves d'exécution des compétences utilisées.",
             timelineHeading: "Frise d'Expérience",
             proofHeading: "Preuves d'Exécution par Compétence",
+            exp4: {
+                title: "Développeuse Front-end Freelance",
+                period: "2025 — Aujourd'hui",
+                summary: "Prestation de services freelance en développement front-end, avec un focus sur des sites visuellement attractifs et faciles à utiliser.",
+                proof1: "Conception et développement de solutions front-end sur mesure pour des clients avec la stack Wix.",
+                proof2: "Implémentation de fonctionnalités interactives et d'animations pour améliorer l'engagement et l'accessibilité.",
+                proof3: "Collaboration directe avec les clients pour adapter les maquettes et livrer des pages prêtes à la mise en ligne."
+            },
+            exp3: {
+                title: "Premier Stage Pendant le SIO",
+                period: "2025",
+                summary: "Collaboration avec des clients pour concevoir et implémenter des solutions front-end sur mesure pour des sites et applications web.",
+                proof1: "Développement d'interfaces responsives et intuitives avec une stack Svelte et Rust.",
+                proof2: "Implémentation de fonctionnalités interactives et d'animations pour améliorer l'engagement et l'accessibilité.",
+                proof3: "Travail dans des bases de code existantes avec livraison de composants front-end maintenables."
+            },
             exp1: {
                 title: "Études SIO SLAM — Projets Logiciels",
                 period: "2024 — Aujourd'hui",
@@ -171,11 +215,23 @@ const translations = {
                 proof2: "Intégration de récupération dynamique de projets GitHub et de cache local en JavaScript.",
                 proof3: "Production de vitrines de modèles 3D et intégration de vidéos optimisées dans le portfolio."
             },
+            exp0: {
+                title: "Premiers Pas en Code & Exploration 3D",
+                period: "2019 — 2024",
+                summary: "Début du code au collège avec Python, puis exploration du web et de la modélisation 3D au lycée.",
+                proof1: "Création de petits projets Python comme un jeu d'aventure textuel et une calculatrice.",
+                proof2: "Création de sites personnels en HTML/CSS et expérimentations en JavaScript.",
+                proof3: "Premières expérimentations en modélisation 3D avec Blender, avec des modèles et animations simples."
+            },
             skill: {
-                htmlcss: "Création de mises en page sur mesure, transitions animées et pages de portfolio responsives.",
-                js: "Ajout du changement de langue, de la navigation interactive, des appels API et du cache local.",
-                three: "Création et ajustement d'une scène d'atterrissage animée en temps réel avec géométrie et shaders personnalisés.",
-                sql: "Application de concepts de bases de données relationnelles dans les projets SIO SLAM et les exercices pratiques."
+                card1Title: "Front-end Portfolio",
+                card1Body: "Conception et itérations de portfolios statiques dans LandingEye et LyasAxesWeb, avec mise en page responsive, navigation par sections et structure UI soignée.",
+                card2Title: "Logique Web Interactive",
+                card2Body: "Implémentation de flux JavaScript concrets dans LandingEye, notamment le changement de langue, la récupération de projets via l'API GitHub, le cache et des comportements UI interactifs.",
+                card3Title: "Applications Web pilotées par les données",
+                card3Body: "Développement de fonctionnalités PHP/SQL dans PizApp et ML2-AppFAQ : authentification, gestion de contenu de type CRUD, flux panier/commande et schémas relationnels structurés.",
+                card4Title: "Logiciels multi-langages",
+                card4Body: "Réalisation d'applications au-delà du navigateur, dont MiniPomo (Rust + Slint) et TarotReader (Java + OCaml), avec état local et flux pilotés par l'utilisateur."
             }
         },
         testimonials: {
