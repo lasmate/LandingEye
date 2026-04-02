@@ -555,10 +555,8 @@ menuItems.forEach(item => {
         openSection(x, y, targetId, item);
     });
 
-    item.dataset.value = item.innerText;
-    
     item.addEventListener('mouseenter', () => {
-        const targetText = item.dataset.value;
+        const targetText = item.innerText;
         const targetTextArray = targetText.split('');
         
         const paths = targetTextArray.map((char) => {

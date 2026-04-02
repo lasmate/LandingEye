@@ -5,6 +5,10 @@
     --bg-color: #ffffff;
     --text-color: #333;
     --accent-color: #4c351d;
+    --top-menu-accent: #8f7fe7;
+    --top-menu-accent-2: #4aa7ff;
+    --bottom-menu-accent: #ffd43b;
+    --bottom-menu-accent-2: #45d76a;
     --link-hover-color: #0066cc;
     --menu-bg: rgba(255, 255, 255, 0.9);
     --menu-blur: blur(10px);
@@ -118,14 +122,17 @@ canvas {
         transform: translateY(0);
     }
     & .top-menu-dropdown {
-        background-color: var(--menu-bg);
+        border: 3px solid transparent;
+        background:
+            linear-gradient(var(--menu-bg), var(--menu-bg)) padding-box,
+            linear-gradient(90deg, var(--top-menu-accent), var(--top-menu-accent-2)) border-box;
         backdrop-filter: var(--menu-blur);
         padding: 15px 30px;
         border-radius: 0 0 20px 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1), 0 0 0 1px rgba(143, 127, 231, 0.25);
         display: flex;
         gap: 25px;
-        transform: translateY(-100%);
+        transform: translateY(calc(-100% + 10px));
         transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         font-family: var(--font-main);
         & a {
@@ -137,7 +144,7 @@ canvas {
             position: relative;
             font-family: var(--font-mono);
             &:hover {
-                color: #000;
+                color: var(--top-menu-accent);
                 transform: translateY(1px);
                 &::after {
                     width: 100%;
@@ -149,7 +156,7 @@ canvas {
                 height: 2px;
                 bottom: -4px;
                 left: 0;
-                background-color: var(--text-color);
+                background-color: var(--top-menu-accent);
                 transition: width 0.3s ease;
             }}
     }}
@@ -172,14 +179,17 @@ canvas {
         transform: translateY(0);
     }
     & .bottom-menu-dropdown {
-        background-color: var(--menu-bg);
+        border: 3px solid transparent;
+        background:
+            linear-gradient(var(--menu-bg), var(--menu-bg)) padding-box,
+            linear-gradient(90deg, var(--bottom-menu-accent), var(--bottom-menu-accent-2)) border-box;
         backdrop-filter: var(--menu-blur);
         padding: 15px 30px;
         border-radius: 20px 20px 0 0;
-        box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.1), 0 0 0 1px rgba(69, 215, 106, 0.3);
         display: flex;
         gap: 25px;
-        transform: translateY(100%);
+        transform: translateY(calc(100% - 10px));
         transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         font-family: var(--font-main);
         & a {
@@ -191,8 +201,20 @@ canvas {
             position: relative;
             font-family: var(--font-mono);
             &:hover {
-                color: #000;
+                color: var(--bottom-menu-accent);
                 transform: scale(1.05);
+                &::after {
+                    width: 100%;
+                }}
+            &::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -4px;
+                left: 0;
+                background-color: var(--bottom-menu-accent);
+                transition: width 0.3s ease;
             }}
     }}
 /* Page Content */
